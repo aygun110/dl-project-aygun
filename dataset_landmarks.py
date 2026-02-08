@@ -12,7 +12,7 @@ class CelebALandmarks(Dataset):
             landmark_file,
             sep=r"\s+",
             skiprows=2,
-            header=None      # <- добавлено
+            header=None     
         )
 
         self.transform = transforms.Compose([
