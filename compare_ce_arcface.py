@@ -22,29 +22,28 @@ def get_embedding(image_path, model_path):
 
     return emb.cpu().numpy()
 
-# ------------------------
+
 # Пары изображений для сравнения
-# ------------------------
+
 img1 = "data/img_align_celeba/000001.jpg"
 img2 = "data/img_align_celeba/000002.jpg"
 
-# ------------------------
+
 # Сравнение через CrossEntropy
-# ------------------------
+
 emb1_ce = get_embedding(img1, model_path="face_ce.pth")
 emb2_ce = get_embedding(img2, model_path="face_ce.pth")
 sim_ce = cosine_similarity(emb1_ce, emb2_ce)
 
-# ------------------------
+
 # Сравнение через ArcFace
-# ------------------------
+
 emb1_arc = get_embedding(img1, model_path="face_arcface.pth")
 emb2_arc = get_embedding(img2, model_path="face_arcface.pth")
 sim_arc = cosine_similarity(emb1_arc, emb2_arc)
 
-# ------------------------
+
 # Вывод результатов на русском
-# ------------------------
 print(f"Сходство (CE): {sim_ce[0][0]:.4f}")
 print(f"Сходство (ArcFace): {sim_arc[0][0]:.4f}")
 
