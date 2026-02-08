@@ -6,15 +6,13 @@ from sklearn.metrics.pairwise import cosine_similarity
 from models.facenet import FaceNet
 from dataset_identity import CelebAIdentity
 
-# =========================
 # Устройство
-# =========================
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 print("Используется устройство:", device)
 
-# =========================
+
 # Загружаем датасет, чтобы узнать количество классов
-# =========================
+
 dataset = CelebAIdentity(
     "data/img_align_celeba",
     "data/identity_CelebA.txt"
@@ -23,9 +21,9 @@ dataset = CelebAIdentity(
 num_classes = dataset.data["label"].nunique()
 print("Количество классов:", num_classes)
 
-# =========================
-# Создаем модель ТАК ЖЕ, как при обучении
-# =========================
+
+# Создаем модель так же, как при обучении
+
 model = FaceNet(num_classes=num_classes).to(device)
 
 # Загружаем веса
@@ -34,9 +32,9 @@ model.eval()
 
 print("Модель успешно загружена")
 
-# =========================
+
 # Функция получения embedding
-# =========================
+
 def get_embedding(path):
     print(f"\nОбработка изображения: {path}")
 
@@ -57,9 +55,9 @@ def get_embedding(path):
 
     return emb.cpu().numpy()
 
-# =========================
+
 # Сравнение двух изображений
-# =========================
+
 emb1 = get_embedding("/Users/aygun/Desktop/lab deep learning/data/img_align_celeba/000001.jpg")
 emb2 = get_embedding("/Users/aygun/Desktop/lab deep learning/data/img_align_celeba/000002.jpg")
 
