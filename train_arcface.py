@@ -5,15 +5,14 @@ from models.facenet import FaceNet
 from models.arcface import ArcFace
 import torch.nn.functional as F
 
-# ------------------------
+
 # 1. Устройство
-# ------------------------
+
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 print("Используется устройство:", device)
 
-# ------------------------
+
 # 2. Датасет
-# ------------------------
 dataset = CelebAIdentity(
     "data/img_align_celeba",
     "data/identity_CelebA.txt"
@@ -25,9 +24,8 @@ num_classes = dataset.data["label"].nunique()
 print("Количество классов:", num_classes)
 print("Количество батчей:", len(loader))
 
-# ------------------------
+
 # 3. Модель + ArcFace
-# ------------------------
 model = FaceNet().to(device)                      # без embedding_size
 arcface = ArcFace(emb_size=512, num_classes=num_classes).to(device)
 
@@ -35,9 +33,8 @@ optimizer = torch.optim.Adam(
     list(model.parameters()) + list(arcface.parameters()), lr=1e-3
 )
 
-# ------------------------
+
 # 4. Обучение
-# ------------------------
 epochs = 2  # для быстрого теста
 for epoch in range(epochs):
     total_loss = 0
@@ -66,9 +63,8 @@ for epoch in range(epochs):
     avg_loss = total_loss / len(loader)
     print(f"Эпоха {epoch+1} завершена. Средний Loss: {avg_loss:.4f}\n")
 
-# ------------------------
+
 # 5. Сохраняем модель
-# ------------------------
 torch.save(model.state_dict(), "face_arcface.pth")
 print("Модель ArcFace сохранена как face_arcface.pth")
 
