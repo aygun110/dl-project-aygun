@@ -3,23 +3,23 @@ import numpy as np
 import torch
 from models.landmark_model import LandmarkNet
 
-# ------------------------------
+
 # 1. Настройка устройства
-# ------------------------------
+
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 print(f"Используется устройство: {device}")
 
-# ------------------------------
+
 # 2. Загружаем модель
-# ------------------------------
+
 model = LandmarkNet().to(device)
 model.load_state_dict(torch.load("landmark_model.pth", map_location=device))
 model.eval()
 print("Модель LandmarkNet загружена")
 
-# ------------------------------
+
 # 3. Функция выравнивания лица
-# ------------------------------
+
 def align_face(image_path, show=False):
     image = cv2.imread(image_path)
     if image is None:
@@ -56,9 +56,9 @@ def align_face(image_path, show=False):
 
     return aligned
 
-# ------------------------------
+
 # 4. Пример использования
-# ------------------------------
+
 if __name__ == "__main__":
     test_image = "data/img_align_celeba/000001.jpg"  # путь к тестовому изображению
     aligned_face = align_face(test_image, show=True)
